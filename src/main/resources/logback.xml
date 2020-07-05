@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!--引入别的配置资源-->
+    <!--<property resource="logback.properties" />-->
+    <property name="APP_NAME" value="sbdemo"/>
+    <property name="LOG_HOME" value="f:/applogs2/${APP_NAME}"/>
+    <property name="LOG_LEVEL" value="INFO"/>
+    <property name="maxFileSize" value="1MB"/>
+    <property name="maxHistory" value="1"/>
+    <!--指定日志文件的上限大小，例如设置为100MB的话，那么到了这个值，就会删除旧的日志-->
+    <property name="totalSizeCap" value="100MB"/>
+
+    <!-- 控制台日志配置 -->
+    <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info级别日志控制 -->
+    <appender name="FILE_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${LOG_HOME}/info.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/info/info-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- warn级别日志控制 -->
+    <appender name="WARN_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${LOG_HOME}/warn.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/warn/warn-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR级别日志控制 -->
+    <appender name="ERROR_INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${LOG_HOME}/error.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/error/error-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE-APPENDER"/>
+        <appender-ref ref="FILE_INFO"/>
+        <appender-ref ref="WARN_INFO"/>
+        <appender-ref ref="ERROR_INFO"/>
+    </root>
+</configuration>
